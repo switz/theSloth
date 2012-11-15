@@ -1,0 +1,32 @@
+AUTH   	= 'auth+live+50c1f0e67bd9fb9d8b9085ba1ea96a5bd1c329ea'; 
+USERID 	= '4ede3aff4fe7d02945001ae5';
+ROOMID 	= '4e4986bb14169c5f241318a6';
+
+// Phish.net API keys
+PNPK = 'B4698A19B59EF09F2355';
+PNUK = 'E7C0BA1245557B33F80';
+
+// The bot's own userid
+selfUserid = '4ede3aff4fe7d02945001ae5';
+
+// Global variables
+apibase = 'http://stats.thephish.fm/api/';
+apikey = '7ee4987aef0c221992916e3b4f9a5b13';
+is_dj = false;
+awesomes = new Array();
+awesomeTriggers = /(awesome|great|sick|nasty|good)/i;
+admins = new Array('4e274d8ca3f7512452022675','4ed8cb55a3f7514a830002b2','4e711b314fe7d045b011f114');
+holdspot = false;
+lastsong = false;
+greeting = false;
+replay = false;
+blacklist = new Array();
+moderators = new Array();
+blacklistReasons = new Array('http://i.imgur.com/ibFLX.gif', 'http://i.imgur.com/Pjc52.gif', 'http://i.imgur.com/lDs7b.gif');
+mode = new Object();
+idleTime = new Object();
+mode.cantDj = null;
+modeBootPending = false;
+replayOverride = false;
+lastPlayedResponse = '';
+djspot = new Array();
