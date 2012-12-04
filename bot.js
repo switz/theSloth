@@ -8,7 +8,7 @@ bot.debug = false;
 
 function parseDate(i) {
 	var r = /[0-9]{1,4}[\-\/\s\.\\]{1,2}[0-9]{1,2}[\-\/\s\.\\]{1,2}[0-9]{1,4}/;
-	var showdate = i.match(r); 
+	var showdate = i.match(r);
 	if (showdate) {
 		var d = Date.parse(showdate[0]);
 		if (d) {
@@ -54,13 +54,13 @@ function getEpoch() {
 function pause(millis) {
 	var date = new Date();
 	var curDate = null;
-	do { curDate = new Date(); } 
+	do { curDate = new Date(); }
 	while(curDate-date < millis)
 }
 
-bot.on('newsong', function(data) { 
+bot.on('newsong', function(data) {
 	var dateBlob = data.room.metadata.current_song.metadata.artist+' '+data.room.metadata.current_song.metadata.song+' '+data.room.metadata.current_song.metadata.album;
-	var songname = 	data.room.metadata.current_song.metadata.song, 
+	var songname = 	data.room.metadata.current_song.metadata.song,
 		artist = 	escape(data.room.metadata.current_song.metadata.artist),
 		songid = 	escape(data.room.metadata.current_song._id),
 		starttime = escape(data.room.metadata.current_song.starttime),
@@ -145,8 +145,8 @@ bot.on('endsong', function(data) {
 				mode[userid] = 0;
 				bot.pm(name+', we\'re asking DJs to give others a chance at a DJ spot after '+mode.maxTime/60+mode.maxUnits+'. If nobody else wants to DJ, hop back up!', userid);
 			}
-		} 
-	}	
+		}
+	}
 	if (djspot['mode'] == 'reservation') {
 		bot.remDj();
 		myLog('endSong', djspot['reserved_for']+' expired, quitting DJ spot');
@@ -208,7 +208,7 @@ bot.on('add_dj', function(data) {
 				djspot['on_stage'] = false;
 				bot.speak('Looks like you\'ve got enough DJs now.');
 				bot.remDj();
-			}			
+			}
 		});
 	}
 });
@@ -236,39 +236,42 @@ bot.on('speak', function (data) {
    var userid = data.userid;
    var setlist = null;
 
-	var chatResponses = { };
-	chatResponses.help 		= { trigger: new RegExp('^!help$','i'), response: 'http://stats.thephish.fm/about.php' };
-	chatResponses.tips 		= { trigger: new RegExp('^!tips$','i'), response: 'http://thephish.fm/tips/'};
-	chatResponses.stream 	= { trigger: new RegExp('^!stream$','i'), response: 'http://mobilefunspot.com/streams.html'};
-	chatResponses.stats 	= { trigger: new RegExp('^!stats$','i'), response: 'http://stats.thephish.fm'};
-	chatResponses.gifs	 	= { trigger: new RegExp('^!gifs$','i'), response: 'http://tinyurl.com/ttgifs'};
-	chatResponses.deg	 	= { trigger: new RegExp('^!deg$','i'), response: 'http://tinyurl.com/phishdeg'};
-	chatResponses.icculus	 	= { trigger: new RegExp('^!icculus$','i'), response: 'Read the fucking :book:'};
-	chatResponses.greet	 	= { trigger: new RegExp('^!greet$','i'), response: greeting};
-	chatResponses.slide	 	= { trigger: new RegExp('^!slide$','i'), response: 'http://thephish.fm/theslide'};
-	chatResponses.sloth	 	= { trigger: new RegExp('^!sloth$','i'), response: 'http://stats.thephish.fm/about.php'};
-	chatResponses.sloth2 	= { trigger: new RegExp('^!about$','i'), response: 'http://stats.thephish.fm/about.php'};
-	chatResponses.meettup 	= { trigger: new RegExp('^!meettup$','i'), response: 'http://www.tinyurl.com/2012TTNYE'};
-	chatResponses.ss 		= { trigger: new RegExp('^!ss$','i'), response: 'http://thephish.fm/secreTTsanTTa'};
-	chatResponses.breakfast	= { trigger: new RegExp('^!whatdidkfhaveforbreakfast$','i'), response: 'Trick question.  KernelForbin did not eat breakfast.'};
-	chatResponses.ttplus 	= { trigger: new RegExp('^!ttplus$','i'), response: 'TT+ info: http://turntableplus.fm/beta'};
-	chatResponses.ttx	 	= { trigger: new RegExp('^!ttx$','i'), response: 'Turntable X: http://bit.ly/WbRp8P'};
-	chatResponses.addme	 	= { trigger: new RegExp('^[!+](add(me)?|list|q|qa)$','i'), response: 'K '+name+', you\'re on "the list!"'};
-	chatResponses.feed	 	= { trigger: new RegExp('feed.+sloth','i'), response: randomItem(['ITALIAN SPAGHETTI!','*omnomnom*', '/me burps'])};
-	chatResponses.pets	 	= { trigger: new RegExp('(pets|hugs).+sloth','i'), response: randomItem(['http://tinyurl.com/slothishappy', '<3', 'http://tinyurl.com/coolsloth'])};
-	chatResponses.lick	 	= { trigger: new RegExp('(lick|spam|dose).+sloth','i'), response: '/me stabs '+name};
-	chatResponses.dance	 	= { trigger: new RegExp('dances with.+sloth','i'), response: '/me dances with '+name};
-   
+	var chatResponses =[
+		{ trigger: new RegExp('^!help$','i'), response: 'http://stats.thephish.fm/about.php' },
+		{ trigger: new RegExp('^!tips$','i'), response: 'http://thephish.fm/tips/'},
+		{ trigger: new RegExp('^!stream$','i'), response: 'http://mobilefunspot.com/streams.html'},
+		{ trigger: new RegExp('^!stats$','i'), response: 'http://stats.thephish.fm'},
+		{ trigger: new RegExp('^!gifs$','i'), response: 'http://tinyurl.com/ttgifs'},
+		{ trigger: new RegExp('^!deg$','i'), response: 'http://tinyurl.com/phishdeg'},
+		{ trigger: new RegExp('^!icculus$','i'), response: ':book:'},
+		{ trigger: new RegExp('^!greet$','i'), response: greeting},
+		{ trigger: new RegExp('^!slide$','i'), response: 'http://thephish.fm/theslide'},
+		{ trigger: new RegExp('^!sloth$','i'), response: 'http://stats.thephish.fm/about.php'},
+		{ trigger: new RegExp('^!about$','i'), response: 'http://stats.thephish.fm/about.php'},
+		{ trigger: new RegExp('^!meettup$','i'), response: 'http://www.tinyurl.com/2012TTNYE'},
+		{ trigger: new RegExp('^!ss$','i'), response: 'http://thephish.fm/secreTTsanTTa'},
+		{ trigger: new RegExp('^!whatdidkfhaveforbreakfast$','i'), response: 'Trick question.  KernelForbin did not eat breakfast.'},
+		{ trigger: new RegExp('^!ttplus$','i'), response: 'TT+ info: http://turntableplus.fm/beta'},
+		{ trigger: new RegExp('^!ttx$','i'), response: 'Turntable X: http://bit.ly/WbRp8P'},
+		{ trigger: new RegExp('^[!+](add(me)?|list|q|qa)$','i'), response: 'K '+name+', you\'re on "the list!"'},
+		{ trigger: new RegExp('feed.+sloth','i'), response: randomItem(['ITALIAN SPAGHETTI!','*omnomnom*', '/me burps'])},
+		{ trigger: new RegExp('(pets|hugs).+sloth','i'), response: randomItem(['http://tinyurl.com/slothishappy', '<3', 'http://tinyurl.com/coolsloth'])},
+		{ trigger: new RegExp('(lick|spam|dose).+sloth','i'), response: '/me stabs '+name},
+		{ trigger: new RegExp('dances with.+sloth','i'), response: '/me dances with '+name}
+	];
+
+
+
 	for(t in chatResponses) {
 		if (text.match(chatResponses[t].trigger)) {
-			bot.speak(chatResponses[t].response); 
+			bot.speak(chatResponses[t].response);
 		}
 	}
 
    if (text.match(/^!notes$/i)) {
 		bot.roomInfo(true, function(data) {
 			var starttime = Math.floor(data.room.metadata.current_song.starttime);
-	   		bot.speak('Prefix notes with ## and I\'ll save them for later. For example: http://stats.thephish.fm/'+starttime);		
+	   		bot.speak('Prefix notes with ## and I\'ll save them for later. For example: http://stats.thephish.fm/'+starttime);
 		});
 
    }
@@ -291,7 +294,7 @@ bot.on('speak', function (data) {
 							var who = res.buffer;
 							if (who.length > 1) {
 								bot.speak(who);
-							} 
+							}
 						}
 					});
 				} else {
@@ -316,7 +319,7 @@ bot.on('speak', function (data) {
 							var lastPlayedResponse = res.buffer;
 							if (lastPlayedResponse.length > 1) {
 								bot.speak(lastPlayedResponse);
-							} 
+							}
 						}
 					});
 				} else {
@@ -326,7 +329,7 @@ bot.on('speak', function (data) {
 		}
 	}
 	if (text.match(/^##/i)) {
-		var note = escape(text.substr(2));		
+		var note = escape(text.substr(2));
 		bot.roomInfo(true, function(data) {
 			if (showdate = parseDate(data.room.metadata.current_song.metadata.artist+' '+data.room.metadata.current_song.metadata.song+' '+data.room.metadata.current_song.metadata.album)) {
 				var options = {url: apibase+'note.php?userid='+userid+'&starttime='+data.room.metadata.current_song.starttime+'&visibility=public&content='+note };
@@ -380,12 +383,12 @@ bot.on('speak', function (data) {
 				var groove = res.buffer;
 				if (groove.length > 1) {
 					bot.speak(groove);
-				} 
+				}
 			}
 		});
 	}
 	if (text.match(/^!points:/i)) {
-		var points = escape(text.substr(8));		
+		var points = escape(text.substr(8));
 		var options = {url: apibase+'points.php?userid='+userid+'&target='+points };
 		http.get(options, function(error, res) {
 			if (error) {
@@ -394,11 +397,11 @@ bot.on('speak', function (data) {
 				var who = res.buffer;
 				if (who.length > 1) {
 					bot.speak(who);
-				} 
+				}
 			}
 		});
 	}
-    if (text.match(/^!album$/)) {	 
+    if (text.match(/^!album$/)) {
    		bot.roomInfo(true, function(data) {
 			if ((data.room.metadata.current_song.metadata.album).length > 1) {
 				bot.speak('Album field: '+data.room.metadata.current_song.metadata.album);
@@ -434,7 +437,7 @@ bot.on('speak', function (data) {
    	   		djspot['on_stage'] = djspot['mode'] = djspot['count'] = djspot['reservedfor'] = false;
    	   		bot.remDj();
    	   }
-   }   
+   }
    if (text.match(/(awesome|great|sick|nasty|good|nice)/i)) {
 		if (!awesomes.contains(userid)) {
 			awesomes.push(userid);
@@ -455,8 +458,8 @@ bot.on('speak', function (data) {
 		bot.speak(randomItem(['I love you too, '+name+'', 'The feeling is mutual.', 'Awwwww....']));
 		bot.becomeFan(userid);
    }
-   
-   if (text.match(/^\!setlist$/)) {	 
+
+   if (text.match(/^\!setlist$/)) {
    		bot.roomInfo(true, function(data) {
    			if (showdate = parseDate(data.room.metadata.current_song.metadata.artist+' '+data.room.metadata.current_song.metadata.song+' '+data.room.metadata.current_song.metadata.album)) {
    				bot.speak('http://phish.net/setlists/?d='+showdate);
@@ -467,7 +470,7 @@ bot.on('speak', function (data) {
    }
 
 	if (text.match(/^!live$/)) {
-   		bot.roomInfo(true, function(data) { 
+   		bot.roomInfo(true, function(data) {
 			var options = { url: 'http://api.phish.net/api.js?api=1.0&method=getShow&apikey='+PNPK+'&linked=0&format=json&showdate=2015-06-06' };
 			http.get(options, function(error, res) {
 					if (error) {
@@ -484,11 +487,11 @@ bot.on('speak', function (data) {
 					}
 				});
    		});
-   }   
-   
-   
-   
-	   
+   }
+
+
+
+
 });
 
 bot.on('update_user', function (data) {
@@ -504,8 +507,8 @@ bot.on('registered', function(data) {
 	var user = data.user[0];
 	usersList[user.userid] = user;
 
-	
-	
+
+
 	var options = { url: apibase+'user.php?key='+apikey+'&id='+userid+'&name='+name+'&avatarid='+avatarid+'&points='+points };
 	if (blacklist.contains(userid)) {
 		bot.bootUser(userid, randomItem(blacklistReasons));
@@ -521,7 +524,7 @@ bot.on('registered', function(data) {
 					blacklist.push(userid);
 					myLog('registered', 'Booted blacklisted user '+userid);
 					return;
-				} 
+				}
 			}
 		});
 		if (replayOverride) {
@@ -535,14 +538,14 @@ bot.on('registered', function(data) {
 					var replayInfo = res.buffer;
 					if (replayInfo.length > 1) {
 						bot.pm(replayInfo, userid);
-					} 
+					}
 				}
 			});
 		}
 
 		var roominfo = bot.roomInfo(true, function(data) {
 			moderators = data.room.metadata.moderator_id;
-		});		
+		});
 
 		if (userid == djspot['reserved_for']) {
 			bot.pm('Remember, reply with !spot when you are ready to take your spot back.', userid);
@@ -555,7 +558,7 @@ bot.on('registered', function(data) {
 				bot.pm('DJs will now be removed after playing '+mode.maxPlays+mode.maxUnits+'.  Read more: http://thephish.fm/modes/', userid);
 			} else if (mode.type == 'timed') {
 				bot.pm('DJs will now be removed after playing '+mode.maxTime/60+mode.maxUnits+' of tracks. Read more: http://stats.thephish.fm/about.php#modes', userid);
-			}		
+			}
 		}
 	}
 });
@@ -564,26 +567,26 @@ bot.on('deregistered', function(data) {
   delete usersList[data.user[0].userid];
 });
 
-bot.on('pmmed', function (data) { 
+bot.on('pmmed', function (data) {
 	var roominfo = bot.roomInfo(true, function(data) {
 		moderators = data.room.metadata.moderator_id;
 	});
 	var senderid = data.senderid;
 	var userid = data.userid;
 	var text = data.text;
-	bot.getProfile(senderid, function(profile) { 
+	bot.getProfile(senderid, function(profile) {
 		var name = profile.name;
 		myLog('pmmed', name+': '+text);
 	});
 	if (text.match(/^!help$/)) {
 		if (admins.contains(senderid)) {
 			bot.pm('Admin-only functions: !blacklist:username, !greet:greeting. Other commands: !setlistfull, !setlist, !album. http://stats.thephish.fm/about.php for all commands.', senderid);
-	   	} else { 
+	   	} else {
 			bot.pm('Available commands: !setlistfull, !lastsong, !setlist, !album. http://stats.thephish.fm/about.php for all commands.', senderid);
 		}
-	}	
+	}
 	if (text.match(/^!setlistfull$/)) {
-   		bot.roomInfo(true, function(data) { 
+   		bot.roomInfo(true, function(data) {
    			var dateblob = data.room.metadata.current_song.metadata.artist+' '+data.room.metadata.current_song.metadata.song+' '+data.room.metadata.current_song.metadata.album;
 			if (showdate = parseDate(dateblob)) {
 				var options = { url: 'http://api.phish.net/api.js?api=1.0&method=getShow&apikey='+PNPK+'&linked=0&format=json&showdate='+showdate };
@@ -605,7 +608,7 @@ bot.on('pmmed', function (data) {
 			}
    		});
    }
-    if (text.match(/^!setlist$/)) {	 
+    if (text.match(/^!setlist$/)) {
    		bot.roomInfo(true, function(data) {
    			if (showdate = parseDate(data.room.metadata.current_song.metadata.artist+' '+data.room.metadata.current_song.metadata.song+' '+data.room.metadata.current_song.metadata.album)) {
    				bot.pm('http://phish.net/setlists/?d='+showdate, senderid);
@@ -614,7 +617,7 @@ bot.on('pmmed', function (data) {
 			}
    		});
    	}
-    if (text.match(/^!album$/)) {	 
+    if (text.match(/^!album$/)) {
    		bot.roomInfo(true, function(data) {
 			if ((data.room.metadata.current_song.metadata.album).length > 1) {
 				bot.pm(data.room.metadata.current_song.metadata.album, senderid);
@@ -623,7 +626,7 @@ bot.on('pmmed', function (data) {
 			}
    		});
    	}
-    if (text.match(/^!dateblob$/)) {	 
+    if (text.match(/^!dateblob$/)) {
    		bot.roomInfo(true, function(data) {
 			bot.pm(data.room.metadata.current_song.metadata.artist+data.room.metadata.current_song.metadata.song+data.room.metadata.current_song.metadata.album, senderid);
    		});
@@ -642,8 +645,8 @@ bot.on('pmmed', function (data) {
    			bot.vote('up');
    		}
    	}
-   	
-   	
+
+
    	if (text.match(/^!connect$/i)) {
    		var token = getGuid();
 		var options = { url: apibase+'key.php?key='+apikey+'&id='+senderid+'&token='+token };
@@ -652,19 +655,19 @@ bot.on('pmmed', function (data) {
 			myLog('pmmed', '!connect key sent to - '+senderid);
 		});
    	}
-   	   	
-   	
+
+
    	if (text.match(/^!spot$/i)) {
    		if (!djspot['mode']) {
    			var roominfo = bot.roomInfo(false, function(data) {
    				var djs = data.room.metadata.djs;
-				if (djs.indexOf(senderid) == -1) { 
+				if (djs.indexOf(senderid) == -1) {
 					bot.pm("You are not currently holding a DJ spot", senderid);
 					myLog('pmmed', '!spot reply - You are not currently holding a DJ spot');
-				} else { 
+				} else {
 					bot.pm('PM me !spot when you are ready to take your spot back or if you change your mind to release the hold. I will automatically release it when this song ends, though, so hurry!', senderid);
 					djspot['reserved_for'] = senderid;
-					djspot['mode'] = 'reservation'; 
+					djspot['mode'] = 'reservation';
 					myLog('pmmed', '!spot - Holding spot for ('+senderid+')');
 				}
 			});
@@ -674,7 +677,7 @@ bot.on('pmmed', function (data) {
 					myLog('pmmed', '!spot - Reclaimed '+djspot['reserved_for']+' ('+djspot['reserved_for']+') by '+senderid);
 					bot.remDj();
 					djspot['reserved_for'] = false;
-					djspot['on_stage'] = false; 
+					djspot['on_stage'] = false;
 					djspot['mode'] = false;
 				} else {
 					myLog('pmmed', '!spot - Canceled hold for '+djspot['reserved_for']+' by '+senderid);
@@ -704,7 +707,7 @@ bot.on('pmmed', function (data) {
 					lastsong = false;
 					bot.pm('*sigh*', senderid);
 					bot.speak('/me puts his rifle away.');
-				}			
+				}
 			} else if ((cdj!=senderid)&&(moderators.contains(senderid))){
 				if (!lastsong && !modeBootPending) {
 					lastsong = cdj;
@@ -722,7 +725,7 @@ bot.on('pmmed', function (data) {
 				myLog('pmmed', '!lastsong requested by non-DJ, rejected');
 			}
 		});
-   }  
+   }
    if (text.match(/^!greet:/i)) {
    		if (admins.contains(senderid) || moderators.contains(senderid)) {
 	   		greeting = text.substr(7);
@@ -753,7 +756,7 @@ bot.on('pmmed', function (data) {
 			}
 		} else {
 			myLog('pmmed', '!greet - Not authorized');
-		} 
+		}
    }
    if (text.match(/^!blacklist:/i)) {
    		if (admins.contains(senderid)) {
@@ -785,30 +788,30 @@ bot.on('pmmed', function (data) {
 							} else {
 								bot.pm("Something went wrong. Tell Emil!", senderid);
 								myLog('pmmed', '!blacklist - Fatal error looking up: '+badusername);
-							}	
+							}
 						}
 					}
 			});
 		}
    }
-	if (text.match(/^!lame/i)) { 
+	if (text.match(/^!lame/i)) {
 		if (moderators.contains(senderid) || admins.contains(senderid)) {
 			myLog('pmmed', '!lame - Downvote issued by '+senderid);
 			bot.vote('down');
 		} else {
 			myLog('pmmed', '!lame - Denied non-admin / non-moderator');
-			
+
 		}
 	}
 	if (text.match(/^!awesome/i)) {
-		var d = new Date(); 
+		var d = new Date();
 		if (moderators.contains(senderid) || admins.contains(senderid)) {
 			myLog('pmmed', '!awesome - Upvote issued by '+senderid);
 			bot.vote('up');
 		} else {
-			myLog('pmmed', '!awesome - Not authorized');	
+			myLog('pmmed', '!awesome - Not authorized');
 		}
-	}	
+	}
    if (text.match(/^!last /i)) {
 		var songname = escape(text.substr(6));
 		var options = { url: apibase+'hpb.php?action=lastPlayed&song='+songname };
@@ -825,8 +828,8 @@ bot.on('pmmed', function (data) {
 			}
 		});
 	}
-	
-    if (text.match(/^!weather/)) {	 
+
+    if (text.match(/^!weather/)) {
 		var zip = escape(text.substr(9));
 		var options = { url: apibase+'weather.php?key='+apikey+'&what=all&zip='+zip };
 		http.get(options, function(error, res) {
@@ -843,7 +846,7 @@ bot.on('pmmed', function (data) {
 			}
 		});
    	}
-    if (text.match(/^!whois:/)) {	 
+    if (text.match(/^!whois:/)) {
    		var whoisName = escape(text.substr(7));
 		var options = { url: apibase+'whois.php?name='+whoisName };
 		http.get(options, function(error, res) {
@@ -854,7 +857,7 @@ bot.on('pmmed', function (data) {
 				bot.pm(whoisResult, senderid);
 			}
 		});
-   		
+
    	}
 	if (text.match(/^!mode:/) && (moderators.contains(senderid)||admins.contains(senderid))) {
 		mode = null;
@@ -909,11 +912,11 @@ bot.on('pmmed', function (data) {
 				if (djs.indexOf(senderid) == -1) {
 					mode['data'][senderid] = 0;
 					myLog('pmmed', '!mode Reset '+senderid+' count to 0');
-				} else { 
-					if (!mode['data'][senderid]) { 	
+				} else {
+					if (!mode['data'][senderid]) {
 						myLog('pmmed', '!mode No value for mode['+senderid+'], setting to 0');
-						mode['data'][senderid]=0; 				
-					}	
+						mode['data'][senderid]=0;
+					}
 					if (mode.type=='timed') {
 						var units = mode['data'][senderid] == 1 ? ' minute' : ' minutes';
 						var minutes = mode['data'][senderid] ? Math.round(mode['data'][senderid]/60) : 0;
@@ -928,19 +931,19 @@ bot.on('pmmed', function (data) {
 			});
 			if (mode.type == 'playN') {
 				bot.pm('DJs will now be removed after playing '+mode.maxPlays+mode.maxUnits+'.  Read more: http://thephish.fm/modes/', senderid);
-				myLog('pmmed', '!mode reply - DJs will now be removed after playing '+mode.maxPlays+mode.maxUnits+'.  Read more: http://thephish.fm/modes/');  
+				myLog('pmmed', '!mode reply - DJs will now be removed after playing '+mode.maxPlays+mode.maxUnits+'.  Read more: http://thephish.fm/modes/');
 			} else if (mode.type == 'timed') {
 				bot.pm('DJs will now be removed after playing '+mode.maxTime/60+mode.maxUnits+' of tracks. Read more: http://thephish.fm/modes/', senderid);
-				myLog('pmmed', '!mode reply - DJs will now be removed after playing '+mode.maxTime/60+mode.maxUnits+' of tracks. Read more: http://thephish.fm/modes/');  
+				myLog('pmmed', '!mode reply - DJs will now be removed after playing '+mode.maxTime/60+mode.maxUnits+' of tracks. Read more: http://thephish.fm/modes/');
 			}
 		} else {
 			bot.pm('No DJ limits at the moment', senderid);
-			myLog('pmmed', '!mode reply - No DJ limits at the moment');  
+			myLog('pmmed', '!mode reply - No DJ limits at the moment');
 		}
-	}	
-	
+	}
+
 	if (text.match(/^##/i)) {
-		var note = escape(text.substr(2));		
+		var note = escape(text.substr(2));
 		bot.roomInfo(true, function(data) {
 			if (showdate = parseDate(data.room.metadata.current_song.metadata.artist+' '+data.room.metadata.current_song.metadata.song+' '+data.room.metadata.current_song.metadata.album)) {
 				var options = {url: apibase+'note.php?userid='+senderid+'&starttime='+data.room.metadata.current_song.starttime+'&visibility=private&content='+note };
@@ -975,7 +978,7 @@ bot.on('pmmed', function (data) {
 			} else {
 				bot.pm(res.buffer, senderid);
 			}
-		});   
+		});
    }
    if (text.match(/^!pnet$/)) {
 		var options = { url: apibase+'pnet_connect.php?key='+apikey+'&userid='+senderid+'&refresh=1' };
@@ -985,7 +988,7 @@ bot.on('pmmed', function (data) {
 			} else {
 				bot.pm(res.buffer, senderid);
 			}
-		});   
+		});
    }
    if (text.match(/^!balance$/)) {
 		var options = { url: apibase+'plusminus.php?userid='+senderid };
@@ -995,7 +998,7 @@ bot.on('pmmed', function (data) {
 			} else {
 				bot.pm(res.buffer, senderid);
 			}
-		});   
+		});
    }
 });
 

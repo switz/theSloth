@@ -1,0 +1,17 @@
+{
+  "name": "theSloth",
+  "description": "",
+  "version": "0.0.1",
+  "main": "./bot.js",
+  "dependencies": {
+    "ttapi": "~1.5.2",
+    "http-get": "~0.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "bot.js"
+  },
+  "engines": {
+    "node": "0.8.x"
+  }
+}
